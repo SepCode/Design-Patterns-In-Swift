@@ -214,6 +214,10 @@ class Settings {
         set(newTheme) { Settings.theme = newTheme }
     }
 }
+
+class SubSettings: Settings {
+    
+}
 /*:
 ### 用法:
 */
@@ -228,6 +232,11 @@ let screenColor: Color = Settings().currentTheme == .old ? .gray : .white
 
 // 界面二
 let screenTitle: String = Settings().currentTheme == .old ? "Itunes Connect" : "App Store Connect"
+
+// 界面三
+let screenTheme = SubSettings().currentTheme
+//: ### 理解:
+//: 可以看出MonoState并不限定实例的个数，但是这些实例（包括子类的实例）都共用同一个静态变量theme.这也是MonoState和Singleton的最大区别。
 /*:
 🃏 原型（Prototype）
 --------------
