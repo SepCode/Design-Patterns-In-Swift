@@ -134,6 +134,41 @@ let deathStar = DeathStar(builder:empire)
 
 ### 示例：
 */
+// 1
+protocol Product {
+    func doSomething()
+}
+
+protocol ProductFactory {
+    func creat() -> Product
+}
+
+class ProductA: Product {
+    func doSomething() {
+        print("ProductA")
+    }
+}
+
+class ProductB: Product {
+    func doSomething() {
+        print("ProductB")
+    }
+}
+
+class ProductAFactory: ProductFactory {
+    func creat() -> Product {
+        return ProductA()
+    }
+}
+
+class ProductBFactory: ProductFactory {
+    func creat() -> Product {
+        return ProductB()
+    }
+}
+
+
+// 2
 protocol CurrencyDescribing {
     var symbol: String { get }
     var code: String { get }
@@ -183,12 +218,33 @@ enum CurrencyFactory {
 /*:
 ### 用法
 */
+// 1
+let factoryA = ProductAFactory()
+let productA = factoryA.creat()
+productA.doSomething()
+
+let factoryB = ProductBFactory()
+let productB = factoryB.creat()
+productB.doSomething()
+
+// 2
 let noCurrencyCode = "No Currency Code Available"
 
 CurrencyFactory.currency(for: .greece)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .spain)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .unitedStates)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode
+/*:
+ ### 理解:
+ - 创建对象需要大量重复的代码。可以把这些代码写在工厂基类中。
+ - 创建对象需要访问某些信息，而这些信息不应该包含在复合类中。
+ - 创建对象的生命周期必须集中管理，以保证在整个程序中具有一致的行为。 对象创建时会有很多参数来决定如何创建出这个对象。
+ - 创建对象可能是一个pool里的，不是每次都凭空创建一个新的。而pool的大小等参数可以用另外的逻辑去控制。比如连接池对象，线程池对象
+ - 简化一些常规的创建过程。根据配置去创建一个对象也很复杂；但可能95%的情况只创建某个特定类型的对象。这时可以弄个函数直接省略那些配置过程。如Java的线程池的相关创建api（如Executors.newFixedThreadPool等）
+ - 创建一个对象有复杂的依赖关系，比如Foo对象的创建依赖A，A又依赖B，B又依赖C……。于是创建过程是一组对象的的创建和注入。
+ - 知道怎么创建一个对象，但是无法把控创建的时机。需要把“如何创建”的代码塞给“负责决定什么时候创建”的代码。后者在适当的时机，回调执行创建对象的函数。
+ 
+ */
 /*:
  🔂 单态（Monostate）
  ------------
