@@ -82,6 +82,7 @@ let jackInTheBox = BurgerFactoryType.jackInTheBox.make()
 
 ### 示例：
 */
+// 1
 final class DeathStarBuilder {
 
     var x: Double?
@@ -116,9 +117,80 @@ struct DeathStar : CustomStringConvertible {
         return "Death Star at (x:\(x) y:\(y) z:\(z))"
     }
 }
+
+// 2
+
+
+class Car {
+    var part1 = 0
+    var part2 = 0
+    var part3 = 0
+}
+
+protocol ProductBuilder {
+    func build1()
+    func build2()
+    func build3()
+    func getProduct() -> Car
+}
+
+class Director {
+    var builder: ProductBuilder?
+    
+    init(builder: ProductBuilder) {
+        self.builder = builder
+    }
+    
+    func construct() {
+        builder?.build1()
+        builder?.build2()
+        builder?.build3()
+    }
+}
+
+class ProductABuilder: ProductBuilder {
+    private let car = Car()
+    func getProduct() -> Car {
+        return car
+    }
+    
+    func build1() {
+        car.part1 = 1
+    }
+    
+    func build2() {
+        car.part1 = 2
+    }
+    
+    func build3() {
+        car.part1 = 3
+    }
+    
+}
+
+class ProductBBuilder: ProductBuilder {
+    private let car = Car()
+    func getProduct() -> Car {
+        return car
+    }
+    
+    func build1() {
+        car.part1 = 4
+    }
+    
+    func build2() {
+        car.part1 = 5
+    }
+    
+    func build3() {
+        car.part1 = 6
+    }
+}
+
 /*:
 ### 用法
 */
+// 1
 let empire = DeathStarBuilder { builder in
     builder.x = 0.1
     builder.y = 0.2
@@ -126,6 +198,17 @@ let empire = DeathStarBuilder { builder in
 }
 
 let deathStar = DeathStar(builder:empire)
+
+// 2
+let builderA = ProductABuilder()
+let diretorA = Director(builder: builderA)
+diretorA.construct()
+let productA = builderA.getProduct()
+/*:
+ ### 理解:
+ 抽象工厂模式与生成器相似，因为它也可以创建复杂对象。主要的区别是生成器模式着重于一步步构造一个复杂对象。而抽象工厂模式着重于多个系列的产品对象（简单的或是复杂的）。生成器在最后的一步返回产品，而对于抽象工厂来说，产品是立即返回的。
+ 
+ */
 /*:
 🏭 工厂方法（Factory Method）
 -----------------------
