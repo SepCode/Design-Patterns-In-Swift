@@ -215,6 +215,37 @@ enum CurrencyFactory {
         
     }
 }
+
+// 3
+import UIKit
+
+protocol ShowViewManager {
+    func show() -> UIView
+}
+
+class ShareView: UIView {
+    
+}
+
+class CardView: UIView {
+    
+}
+
+class ShareViewManager: ShowViewManager {
+    func show() -> UIView {
+        let view = ShareView()
+        //...
+        return view
+    }
+}
+
+class CardViewManager: ShowViewManager {
+    func show() -> UIView {
+        let view = CardView()
+        //...
+        return view
+    }
+}
 /*:
 ### 用法
 */
@@ -234,6 +265,15 @@ CurrencyFactory.currency(for: .greece)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .spain)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .unitedStates)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode
+
+// 3
+let shareManager = ShareViewManager()
+let shareView = shareManager.show()
+//UIApplication.shared.keyWindow?.addSubview(shareView)
+
+let cardManager = ShareViewManager()
+let cardView = cardManager.show()
+//UIApplication.shared.keyWindow?.addSubview(cardView)
 /*:
  ### 理解:
  - 创建对象需要大量重复的代码。可以把这些代码写在工厂基类中。
