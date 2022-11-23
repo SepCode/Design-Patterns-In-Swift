@@ -355,7 +355,7 @@ class MoonWorker {
         return MoonWorker(name: name, health: health)
     }
 }
-
+//TODO: 优化子类复制父类属性
 class EarthWorker: NSObject, NSCopying {
     
     let name: String
