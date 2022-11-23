@@ -265,7 +265,7 @@ class EarthWorker: NSObject, NSCopying {
     let name: String
     var health: Int = 100
 
-    required init(name: String, health: Int = 100) {
+    init(name: String, health: Int = 100) {
         self.name = name
         self.health = health
     }
@@ -275,15 +275,6 @@ class EarthWorker: NSObject, NSCopying {
     }
 }
 
-class ChinaWorker: EarthWorker {
-    var height: Int = 170
-    
-    override func copy(with zone: NSZone? = nil) -> Any {
-        let clone = super.copy() as! ChinaWorker
-        clone.height = height
-        return clone
-    }
-}
 /*:
 ### 用法
 */
@@ -298,9 +289,9 @@ bell2.health = 23
 var bell3 = prototype.clone()
 bell3.health = 0
 
-let person = ChinaWorker(name: "Man")
+let person = EarthWorker(name: "Man")
 
-var man1 = person.copy() as! ChinaWorker
+var man1 = person.copy() as! EarthWorker
 man1.health = 12
 /*:
  ### 理解:
