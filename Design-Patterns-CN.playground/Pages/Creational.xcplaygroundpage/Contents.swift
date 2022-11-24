@@ -139,7 +139,9 @@ Product2Factory().creatB().doSomething()
 /*:
  ### 理解:
  ![](AbstractFactory.gif)
+ 抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。
  
+ 普通工厂中，根据产品类型分为ProductA、ProductB和ProductC。但是如果有多种分类方式，比如按照产品的生产商分类，ProductA可能和ProductC为一类。这样就用到了抽象工厂模式
  */
 
 /*:
