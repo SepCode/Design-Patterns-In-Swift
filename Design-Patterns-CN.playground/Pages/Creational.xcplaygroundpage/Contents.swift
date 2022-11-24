@@ -126,6 +126,58 @@ class Product2Factory: ProductsFactory {// 面包车车厂
         return ProductB2()
     }
 }
+
+// 3
+import UIKit
+
+protocol ShowManager {
+    func show() -> UIView
+    func showScroll() -> UIScrollView
+}
+
+class ShareV: UIView {
+    
+}
+
+class CardV: UIView {
+    
+}
+
+class ShareScrollV: UIScrollView {
+    
+}
+
+class CardScrollV: UIScrollView {
+    
+}
+
+class ShareVManager: ShowManager {
+    func showScroll() -> UIScrollView {
+        let view = ShareScrollV()
+        //...
+        return view
+    }
+    
+    func show() -> UIView {
+        let view = ShareView()
+        //...
+        return view
+    }
+}
+
+class CardVManager: ShowManager {
+    func showScroll() -> UIScrollView {
+        let view = CardScrollV()
+        //...
+        return view
+    }
+    
+    func show() -> UIView {
+        let view = CardView()
+        //...
+        return view
+    }
+}
 /*:
 ### 用法
 */
@@ -136,6 +188,14 @@ let jackInTheBox = BurgerFactoryType.jackInTheBox.make()
 // 2
 Product1Factory().creatA().doSomething()
 Product2Factory().creatB().doSomething()
+
+// 3
+let shareV = ShareVManager().show()
+//UIApplication.shared.keyWindow?.addSubview(shareV)
+let shareScrollV = ShareVManager().showScroll()
+shareScrollV.scrollsToTop = true
+//UIApplication.shared.keyWindow?.addSubview(shareScrollV)
+
 /*:
  ### 理解:
  ![](AbstractFactory.gif)
