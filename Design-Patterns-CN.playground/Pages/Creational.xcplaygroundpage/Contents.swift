@@ -70,44 +70,44 @@ enum BurgerFactoryType: BurgerMaking {
     }
 }
 // 2
-protocol ProductsA {
+protocol ProductsA {// 五菱宏光车
     func doSomething()
 }
 
-protocol ProductsB {
+protocol ProductsB {// 比亚迪车
     func doSomething()
 }
 
-protocol ProductsFactory {
+protocol ProductsFactory { // 车厂
     func creatA() -> ProductsA
     func creatB() -> ProductsB
 }
 
-class ProductA1: ProductsA {
+class ProductA1: ProductsA {// 五菱mini
     func doSomething() {
         print("ProductA1")
     }
 }
 
-class ProductA2: ProductsA {
+class ProductA2: ProductsA {// 五菱面包
     func doSomething() {
         print("ProductA2")
     }
 }
 
-class ProductB1: ProductsB {
+class ProductB1: ProductsB {// 比亚迪mini
     func doSomething() {
         print("ProductB1")
     }
 }
 
-class ProductB2: ProductsB {
+class ProductB2: ProductsB {// 比亚迪面包
     func doSomething() {
         print("ProductB2")
     }
 }
 
-class Product1Factory: ProductsFactory {
+class Product1Factory: ProductsFactory {// mini车厂
     func creatA() -> ProductsA {
         return ProductA1()
     }
@@ -117,7 +117,7 @@ class Product1Factory: ProductsFactory {
     }
 }
 
-class Product2Factory: ProductsFactory {
+class Product2Factory: ProductsFactory {// 面包车车厂
     func creatA() -> ProductsA {
         return ProductA2()
     }
@@ -290,7 +290,7 @@ protocol Product {// 车
     func doSomething()
 }
 
-protocol ProductFactory {// 五菱宏光
+protocol ProductFactory {// 车厂
     func creat() -> Product
 }
 
