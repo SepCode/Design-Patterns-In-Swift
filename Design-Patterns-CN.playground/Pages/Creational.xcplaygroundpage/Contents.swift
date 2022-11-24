@@ -203,11 +203,11 @@ let deathStar = DeathStar(builder:empire)
 let builderA = ProductABuilder()
 let diretorA = Director(builder: builderA)
 diretorA.construct()
-let productA = builderA.getProduct()
+let product = builderA.getProduct()
 /*:
  ### 理解:
+ ![建造者](Builder.gif)
  抽象工厂模式与生成器相似，因为它也可以创建复杂对象。主要的区别是生成器模式着重于一步步构造一个复杂对象。而抽象工厂模式着重于多个系列的产品对象（简单的或是复杂的）。生成器在最后的一步返回产品，而对于抽象工厂来说，产品是立即返回的。
- 
  */
 /*:
 🏭 工厂方法（Factory Method）
