@@ -18,13 +18,13 @@ import Foundation
 🌰 抽象工厂（Abstract Factory）
 -------------
 
-抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。在正常使用中，客户端程序需要创建抽象工厂的具体实现，然后使用抽象工厂作为接口来创建这一主题的具体对象。
+抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。在正常使用中，客户端程序需要创建抽象工厂的具体实现，然后使用抽象工厂作为接口来创建这一主题的具体对象。[维基百科](https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82)
 
 ### 示例：
 
 协议
 */
-
+// 1
 protocol BurgerDescribing {
     var ingredients: [String] { get }
 }
@@ -69,11 +69,79 @@ enum BurgerFactoryType: BurgerMaking {
         }
     }
 }
+// 2
+protocol ProductsA {
+    func doSomething()
+}
+
+protocol ProductsB {
+    func doSomething()
+}
+
+protocol ProductsFactory {
+    func creatA() -> ProductsA
+    func creatB() -> ProductsB
+}
+
+class ProductA1: ProductsA {
+    func doSomething() {
+        print("ProductA1")
+    }
+}
+
+class ProductA2: ProductsA {
+    func doSomething() {
+        print("ProductA2")
+    }
+}
+
+class ProductB1: ProductsB {
+    func doSomething() {
+        print("ProductB1")
+    }
+}
+
+class ProductB2: ProductsB {
+    func doSomething() {
+        print("ProductB2")
+    }
+}
+
+class Product1Factory: ProductsFactory {
+    func creatA() -> ProductsA {
+        return ProductA1()
+    }
+    
+    func creatB() -> ProductsB {
+        return ProductB1()
+    }
+}
+
+class Product2Factory: ProductsFactory {
+    func creatA() -> ProductsA {
+        return ProductA2()
+    }
+    
+    func creatB() -> ProductsB {
+        return ProductB2()
+    }
+}
 /*:
 ### 用法
 */
+// 1
 let bigKahuna = BurgerFactoryType.bigKahuna.make()
 let jackInTheBox = BurgerFactoryType.jackInTheBox.make()
+
+// 2
+Product1Factory().creatA().doSomething()
+Product2Factory().creatB().doSomething()
+/*:
+ ### 理解:
+ ![](AbstractFactory.gif)
+ 
+ */
+
 /*:
 👷 生成器（Builder）
 --------------
@@ -206,7 +274,7 @@ diretorA.construct()
 let product = builderA.getProduct()
 /*:
  ### 理解:
- ![建造者](Builder.gif)
+ ![](Builder.gif)
  抽象工厂模式与生成器相似，因为它也可以创建复杂对象。主要的区别是生成器模式着重于一步步构造一个复杂对象。而抽象工厂模式着重于多个系列的产品对象（简单的或是复杂的）。生成器在最后的一步返回产品，而对于抽象工厂来说，产品是立即返回的。
  */
 /*:
@@ -218,34 +286,34 @@ let product = builderA.getProduct()
 ### 示例：
 */
 // 1
-protocol Product {
+protocol Product {// 车
     func doSomething()
 }
 
-protocol ProductFactory {
+protocol ProductFactory {// 五菱宏光
     func creat() -> Product
 }
 
 class ProductA: Product {
-    func doSomething() {
+    func doSomething() {// mini
         print("ProductA")
     }
 }
 
-class ProductB: Product {
+class ProductB: Product {// 面包车
     func doSomething() {
         print("ProductB")
     }
 }
 
 class ProductAFactory: ProductFactory {
-    func creat() -> Product {
+    func creat() -> Product {// mini车厂
         return ProductA()
     }
 }
 
 class ProductBFactory: ProductFactory {
-    func creat() -> Product {
+    func creat() -> Product {// 面包车车厂
         return ProductB()
     }
 }
@@ -333,13 +401,13 @@ class CardViewManager: ShowViewManager {
 ### 用法
 */
 // 1
-let factoryA = ProductAFactory()
-let productA = factoryA.creat()
-productA.doSomething()
+let factory1 = ProductAFactory()
+let product1 = factory1.creat()
+product1.doSomething()
 
-let factoryB = ProductBFactory()
-let productB = factoryB.creat()
-productB.doSomething()
+let factory2 = ProductBFactory()
+let product2 = factory2.creat()
+product2.doSomething()
 
 // 2
 let noCurrencyCode = "No Currency Code Available"
