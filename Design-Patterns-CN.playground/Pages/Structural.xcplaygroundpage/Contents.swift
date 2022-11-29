@@ -18,7 +18,7 @@ import Foundation
 🔌 适配器（Adapter）
 --------------
 
-适配器模式有时候也称包装样式或者包装(wrapper)。将一个类的接口转接成用户所期待的。一个适配使得因接口不兼容而不能在一起工作的类工作在一起，做法是将类自己的接口包裹在一个已存在的类中。
+适配器模式有时候也称包装样式或者包装(wrapper)。将一个类的接口转接成用户所期待的。一个适配使得因接口不兼容而不能在一起工作的类能在一起工作，做法是将类自己的接口包裹在一个已存在的类中。[维基百科](https://zh.wikipedia.org/wiki/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F)
 
 ### 示例：
 */
@@ -65,6 +65,23 @@ let newFormat = NewDeathStarSuperlaserTarget(target)
 
 newFormat.angleH
 newFormat.angleV
+/*:
+ ### 理解:
+ ObjectAdapter
+ 
+ ![ObjectAdapter](ObjectAdapter.png)
+ ClassAdapter 1
+ 
+ ![ClassAdapter](ClassAdapter.png)
+ ClassAdapter 2
+ 
+ ![ClassAdapter](Adapter_Class.gif)
+ 
+ - 你想使用一个已经存在的类，而它的接口不符合你的需求。
+ - 你想创建一个可以复用的类，该类可以与其他不相关的类或不可预见的类（即那些接口可能不一定兼容的类）协同工作。
+ - （仅适用于对象Adapter ）你想使用一些已经存在的子类，但是不可能对每一个都进行子类化以匹配它们的接口。对象适配器可以适配它的父类接口。
+ */
+
 /*:
 🌉 桥接（Bridge）
 -----------
