@@ -86,7 +86,7 @@ newFormat.angleV
 🌉 桥接（Bridge）
 -----------
 
-桥接模式将抽象部分与实现部分分离，使它们都可以独立的变化。
+桥接模式将抽象部分与实现部分分离，使它们都可以独立的变化。[维基百科](https://zh.wikipedia.org/wiki/%E6%A9%8B%E6%8E%A5%E6%A8%A1%E5%BC%8F)
 
 ### 示例：
 */
@@ -130,6 +130,17 @@ tvRemoteControl.turnOn()
 
 let fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
+
+/*:
+ ### 理解:
+ - 把事物对象和其具体行为、具体特征分离开来，使它们可以各自独立的变化。事物对象仅是一个抽象的概念。如“圆形”、“三角形”归于抽象的“形状”之下，而“画圆”、“画三角”归于实现行为的“画图”类之下，然后由“形状”调用“画图”。
+ - 你不希望在抽象和它的实现部分之间有一个固定的绑定关系。例如在程序运行时刻实现部分可以被选择或者切换。
+
+ - 类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充。这时Bridge 模式使你可以对不同的抽象接口和实现部分进行组合，并分别对它们进行扩充。
+
+ - 对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。
+
+ */
 /*:
 🌿 组合（Composite）
 --------------
@@ -180,6 +191,13 @@ final class Whiteboard: Shape {
 */
 var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw(fillColor: "Red")
+/*:
+ ### 理解:
+ - 你想表示对象的部分-整体层次结构。
+
+ - 你希望用户忽略组合对象与单个对象的不同，用户将统一地使用组合结构中的所有对象。
+ 
+ */
 /*:
 🍧 修饰（Decorator）
 --------------
