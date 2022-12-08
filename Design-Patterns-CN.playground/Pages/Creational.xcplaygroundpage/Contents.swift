@@ -18,8 +18,8 @@ import Foundation
 🌰 抽象工厂（Abstract Factory）
 -------------
 
-抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。在正常使用中，客户端程序需要创建抽象工厂的具体实现，然后使用抽象工厂作为接口来创建这一主题的具体对象。[维基百科](https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82)
-
+ 提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。
+ 
 ### 示例：
 
 协议
@@ -70,44 +70,44 @@ enum BurgerFactoryType: BurgerMaking {
     }
 }
 // 2
-protocol ProductsA {// 五菱宏光车
+protocol ProductsA {// 键盘
     func doSomething()
 }
 
-protocol ProductsB {// 比亚迪车
+protocol ProductsB {// 显示器
     func doSomething()
 }
 
-protocol ProductsFactory { // 车厂
-    func creatA() -> ProductsA
-    func creatB() -> ProductsB
+protocol ProductsFactory { // 电脑
+    func creatA() -> ProductsA // 键盘
+    func creatB() -> ProductsB // 显示器
 }
 
-class ProductA1: ProductsA {// 五菱mini
+class ProductA1: ProductsA {// 联想键盘
     func doSomething() {
         print("ProductA1")
     }
 }
 
-class ProductA2: ProductsA {// 五菱面包
+class ProductA2: ProductsA {// 苹果键盘
     func doSomething() {
         print("ProductA2")
     }
 }
 
-class ProductB1: ProductsB {// 比亚迪mini
+class ProductB1: ProductsB {// 联想显示器
     func doSomething() {
         print("ProductB1")
     }
 }
 
-class ProductB2: ProductsB {// 比亚迪面包
+class ProductB2: ProductsB {// 苹果显示器
     func doSomething() {
         print("ProductB2")
     }
 }
 
-class Product1Factory: ProductsFactory {// mini车厂
+class Product1Factory: ProductsFactory {// 联想
     func creatA() -> ProductsA {
         return ProductA1()
     }
@@ -117,7 +117,7 @@ class Product1Factory: ProductsFactory {// mini车厂
     }
 }
 
-class Product2Factory: ProductsFactory {// 面包车车厂
+class Product2Factory: ProductsFactory {// 苹果
     func creatA() -> ProductsA {
         return ProductA2()
     }
@@ -198,17 +198,28 @@ shareScrollV.scrollsToTop = true
 
 /*:
  ### 理解:
- ![](AbstractFactory.gif)
- 抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。
+ ![](abstract.png)
  
- 普通工厂中，根据产品类型分为ProductA、ProductB和ProductC。但是如果有多种分类方式，比如按照产品的生产商分类，ProductA可能和ProductC为一类。这样就用到了抽象工厂模式
+ ![](AbstractFactory.png)
+ 
+ AbstractFactory模式有下面的一些优点和缺点:
+ 
+ 1)它分离了具体的类。 AbstractFactory模式帮助你控制一个应用创建的对象的类。因为
+ 一个工厂封装创建产品对象的责任和过程，它将客户与类的实现分离。客户通过它们的抽象接口操纵实例。产品的类名也在具体工厂的实现中被分离;它们不出现在客户代码中。
+ 
+ 2)它使得易于交换产品系列。 一个具体工厂类在一个应用中仅出现一次—即在它初始化的时候。这使得改变一个应用的具体工厂变得很容易。它只需改变具体的工厂即可使用不同的产品配置，这是因为一个抽象工厂创建了一个完整的产品系列，所以整个产品系列会立刻改变。在我们的用户界面的例子中，我们仅需转换到相应的工厂对象并重新创建接口，就可实现从Motif窗口组件转换为PresentationManager窗口组件。
+ 
+ 3)它有利于产品的一致性。 当一个系列中的产品对象被设计成一起工作时，一个应用一次只能使用同一个系列中的对象，这一点很重要。而AbstractFactory很容易实现这一点。
+ 
+ 4)难以支持新种类的产品。 难以扩展抽象工厂以生产新种类的产品。这是因为
+ AbstractFactory接口确定了可以被创建的产品集合。支持新种类的产品就需要扩展该工厂接口，这将涉及AbstractFactory类及其所有子类的改变。我们会在实现一节讨论这个问题的一个解决办法。
  */
 
 /*:
 👷 生成器（Builder）
 --------------
 
-一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象。
+ 将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
 
 ### 示例：
 */
@@ -336,46 +347,55 @@ diretorA.construct()
 let product = builderA.getProduct()
 /*:
  ### 理解:
- ![](Builder.gif)
- 抽象工厂模式与生成器相似，因为它也可以创建复杂对象。主要的区别是生成器模式着重于一步步构造一个复杂对象。而抽象工厂模式着重于多个系列的产品对象（简单的或是复杂的）。生成器在最后的一步返回产品，而对于抽象工厂来说，产品是立即返回的。
+ ![](builder.png)
+ 
+ ![](builder2.png)
+ 
+ ![](builder1.png)
+ 
+ 1)它使你可以改变一个产品的内部表示。 Builder对象提供给导向器一个构造产品的抽象接口。该接口使得生成器可以隐藏这个产品的表示和内部结构。它同时也隐藏了该产品是如何装配的。因为产品是通过抽象接口构造的，你在改变该产品的内部表示时所要做的只是定义一个新的生成器。
+ 
+ 2)它将构造代码和表示代码分开。 Builder模式通过封装一个复杂对象的创建和表示方式提高了对象的模块性。客户不需要知道定义产品内部结构的类的所有信息;这些类是不出现在Builder接口中的。每个ConcreteBuilder包含了创建和装配一个特定产品的所有代码。这些代码只需要写一次;然后不同的Director可以复用它以在相同部件集合的基础上构作不同的Product。在前面的RTF例子中，我们可以为RTF格式以外的格式定义一个阅读器，比如一个SGMLReader，并使用相同的TextConverter生成SGML文档的ASCIIText、TeXText和TextWidget译本。
+ 
+ 3)它使你可对构造过程进行更精细的控制。 Builder模式与一下子就生成产品的创建型模式不同，它是在导向者的控制下一步一步构造产品的。仅当该产品完成时导向者才从生成器中取回它。因此Builder接口相比其他创建型模式能更好的反映产品的构造过程。这使你可以更精细的控制构建过程，从而能更精细的控制所得产品的内部结构。
  */
 /*:
 🏭 工厂方法（Factory Method）
 -----------------------
 
-定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类。工厂方法让类的实例化推迟到子类中进行。[维基百科](https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95)
+ 定义一个用于创建对象的接口，让子类决定实例化哪一个类。 Factory Method使一个类的 实例化延迟到其子类。
 
 ### 示例：
 */
 // 1
-protocol Product {// 车
+protocol Product {//
     func doSomething()
 }
 
-protocol ProductFactory {// 车厂
+protocol ProductFactory {//
     func creat() -> Product
 }
 
 class ProductA: Product {
-    func doSomething() {// mini
+    func doSomething() {//
         print("ProductA")
     }
 }
 
-class ProductB: Product {// 面包车
+class ProductB: Product {//
     func doSomething() {
         print("ProductB")
     }
 }
 
 class ProductAFactory: ProductFactory {
-    func creat() -> Product {// mini车厂
+    func creat() -> Product {//
         return ProductA()
     }
 }
 
 class ProductBFactory: ProductFactory {
-    func creat() -> Product {// 面包车车厂
+    func creat() -> Product {//
         return ProductB()
     }
 }
@@ -489,13 +509,37 @@ let cardView = cardManager.show()
 //UIApplication.shared.keyWindow?.addSubview(cardView)
 /*:
  ### 理解:
- - 创建对象需要大量重复的代码。可以把这些代码写在工厂基类中。
- - 创建对象需要访问某些信息，而这些信息不应该包含在复合类中。
- - 创建对象的生命周期必须集中管理，以保证在整个程序中具有一致的行为。 对象创建时会有很多参数来决定如何创建出这个对象。
- - 创建对象可能是一个pool里的，不是每次都凭空创建一个新的。而pool的大小等参数可以用另外的逻辑去控制。比如连接池对象，线程池对象
- - 简化一些常规的创建过程。根据配置去创建一个对象也很复杂；但可能95%的情况只创建某个特定类型的对象。这时可以弄个函数直接省略那些配置过程。如Java的线程池的相关创建api（如Executors.newFixedThreadPool等）
- - 创建一个对象有复杂的依赖关系，比如Foo对象的创建依赖A，A又依赖B，B又依赖C……。于是创建过程是一组对象的的创建和注入。
- - 知道怎么创建一个对象，但是无法把控创建的时机。需要把“如何创建”的代码塞给“负责决定什么时候创建”的代码。后者在适当的时机，回调执行创建对象的函数。
+ 
+ ![](WX20221208-110807@2x.png)
+ 
+ 1)主要有两种不同的情况。 FactoryMethod模式主要有两种不同的情况:1)第一种情况
+ 是，Creator类是一个抽象类并且不提供它所声明的工厂方法的实现。2)第二种情况是，Creator是一个具体的类而且为工厂方法提供一个缺省的实现。也有可能有一个定义了缺省实现的抽象类，但这不太常见。
+
+ 第一种情况需要子类来定义实现，因为没有合理的缺省实现。它避免了不得不实例化不可预见类的问题。在第二种情况中，具体的Creator主要因为灵活性才使用工厂方法。它所遵循的准则是，“用一个独立的操作创建对象，这样子类才能重定义它们的创建方式。”这条准则保证了子类的设计者能够在必要的时候改变父类所实例化的对象的类。
+
+ 2)参数化工厂方法。 该模式的另一种情况使得工厂方法可以创建多种产品。工厂方法采用一个标识要被创建的对象种类的参数。工厂方法创建的所有对象将共享Product接口。
+
+ 一个参数化的工厂方法具有如下的一般形式，此处MyProduct和YourProduct是Product的子类:
+ 
+ ![](WX20221208-105220@2x.png)
+
+ 
+ 重定义一个参数化的工厂方法使你可以简单而有选择性的扩展或改变一个Creator生产的产品。你可以为新产品引入新的标识符，或可以将已有的标识符与不同的产品相关联。
+
+ 例如，子类MyCreator可以交换MyProduct和YourProduct并且支持一个新的子类TheirProduct:
+ 
+ ![](WX20221208-105252@2x.png)
+ ![](WX20221208-105309@2x.png)
+ 
+ 注意这个操作所做的最后一件事是调用父类的Create。这是因为MyCreator::Create仅在对YOURS、MINE和THEIRS的处理上和父类不同。它对其他类不感兴趣。因此MyCreator扩展了所创建产品的种类，并且将除少数产品以外所有产品的创建职责延迟给了父类。
+
+ 3)特定语言的变化和问题。
+
+ 4)使用模板以避免创建子类。 正如我们已经提及的，工厂方法另一个潜在的问题是它们可能仅为了创建适当的Product对象而迫使你创建Creator子类。在C++中另一个解决方法是提供Creator的一个模板子类，它使用Product类作为模板参数:
+
+ ![](WX20221208-105338@2x.png)
+
+ 5)命名约定。 使用命名约定是一个好习惯，它可以清楚地说明你正在使用工厂方法。例如，Macintosh的应用框架MacApp[App89]总是声明那些定义为工厂方法的抽象操作为Class*DoMakeClass()，此处Class是Product类。
  
  */
 /*:

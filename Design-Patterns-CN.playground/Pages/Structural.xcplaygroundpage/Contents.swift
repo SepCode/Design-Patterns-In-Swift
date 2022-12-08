@@ -93,16 +93,11 @@ newFormat.angleH
 newFormat.angleV
 /*:
  ### 理解:
- ObjectAdapter
  
- ![ObjectAdapter](ObjectAdapter.png)
- ClassAdapter 1
+ 结构型类模式采用继承机制来 组合接口或实现。一个简单的例子是采用多重继承方法将两个以上的类组合成一个类，结果 这个类包含了所有父类的性质。这一模式尤其有助于多个独立开发的类库协同工作。
  
- ![ClassAdapter](ClassAdapter.png)
- ClassAdapter 2
- 
- ![ClassAdapter](Adapter_Class.gif)
- 
+ ![adapter](adapter.png)
+
  - 你想使用一个已经存在的类，而它的接口不符合你的需求。
  - 你想创建一个可以复用的类，该类可以与其他不相关的类或不可预见的类（即那些接口可能不一定兼容的类）协同工作。
  - （仅适用于对象Adapter ）你想使用一些已经存在的子类，但是不可能对每一个都进行子类化以匹配它们的接口。对象适配器可以适配它的父类接口。
